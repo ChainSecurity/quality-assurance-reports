@@ -1,8 +1,7 @@
 ---
 Title:    Extensive QA
 Author:   ChainSecurity  
-Date:     13. Mar, 2025
-Client:   Enzyme Foundation
+Date:     06. May, 2025
 ---
 
 # Extensive QA
@@ -86,6 +85,9 @@ Repository: https://github.com/enzymefinance/protocol
 
 ``git show 49f7164e74edb928c50e5938f0fffcbd9989f038`` excluding interfaces and tests.
 
+
+Later the following commits were added: `git show 678b139738b3142b26f86fd7515341f6449518ae` and `git show ff74c75a90923fa94d05e8c05fa2b739d53053fa`.
+
 ```
 contracts/release/extensions/external-position-manager/external-positions/aave-v3-debt/AaveV3DebtPositionDataDecoder.sol
 contracts/release/extensions/external-position-manager/external-positions/aave-v3-debt/AaveV3DebtPositionLib.sol
@@ -107,6 +109,8 @@ This commit introduces a new action to Aave V3 Debt Positions. More precisely, r
 ### Findings
 
 - *Note*: Privileged addresses might claim rewards on behalf of the external position. However, sweeping allows to claim in such cases.
+- *Issue*: **Resolved**. Client reported an issue in the initial version where claiming for the same token multiple times (e.g. updated roots) could fail. That was resolved in the second commit. However, the second commit presented an edge case where the array of claims could contain the same claim multiple times. While this would have led to reverts in most cases (failing transfers similar to before), a specific case could have led to unwanted modifications of the position health (e.g. reward token is aToken). In the latest version the issue was resolved.
+
 
 ## Price Feed: ERC4626 Rate Aggregator
 
